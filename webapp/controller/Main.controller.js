@@ -10,9 +10,9 @@ sap.ui.define(
     "use strict";
     var _sIdentity = "cmpe272.ss";
     var sLogOutUrl =
-      "https://rightfinder.auth.ap-south-1.amazoncognito.com/logout?client_id=4khht0k2e1r2k5v3ei7hsp8smd&logout_uri=http://localhost:3000/";
+      "https://rightfinder.auth.ap-south-1.amazoncognito.com/logout?client_id=4khht0k2e1r2k5v3ei7hsp8smd&logout_uri=https://master.dumii96ks5gdv.amplifyapp.com/";
     var sUrl =
-      "https://rightfinder.auth.ap-south-1.amazoncognito.com/login?client_id=4khht0k2e1r2k5v3ei7hsp8smd&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=http://localhost:3000/";
+      "https://rightfinder.auth.ap-south-1.amazoncognito.com/login?client_id=4khht0k2e1r2k5v3ei7hsp8smd&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https://master.dumii96ks5gdv.amplifyapp.com/";
     return Controller.extend("aws.LightningStorage.controller.Main", {
       onInit: function () {
         this._oView = this.getView();
@@ -617,7 +617,7 @@ sap.ui.define(
       handleLinkedInImport: function () {
         var oMainModel = this._oView.getModel("mainModel");
         var sUrl =
-          "https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=86pphz1g1cf3rm&redirect_uri=http://localhost:3000/&scope=r_liteprofile%20r_emailaddress%20w_member_social";
+          "https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=86pphz1g1cf3rm&redirect_uri=https://master.dumii96ks5gdv.amplifyapp.com&scope=r_liteprofile%20r_emailaddress%20w_member_social";
         // window.open(sUrl, "window", "toolbar=no, menubar=no, resizable=yes");
         var child = window.open(
           sUrl,
