@@ -477,11 +477,12 @@
 												<m:Label text="Location"/>
 												<m:Input value="{mainModel>/employee/location}"/>
 												<m:Label text="Position"/>
-												<m:Input value="{mainModel>/employee/position}" editable="{mainModel>/MGR}"/>
+												<m:Input value="{mainModel>/employee/position}" editable="false"/>
 												<m:Label text="Department Name"/>
-												<m:Input value="{mainModel>/employee/dept_name}" editable="{mainModel>/MGR}"/>
+												<m:Input value="{mainModel>/employee/dept_name}" editable="false"/>
 												<m:Label text="Salary"/>
-												<m:Input value="{mainModel>/employee/salary}" editable="{mainModel>/MGR}"/>
+												<m:Input value="{mainModel>/employee/salary}" editable="false"/>
+												<!-- {mainModel>/MGR} -->
 											</f:content>
 										</f:SimpleForm>
 									</layout:VerticalLayout>
