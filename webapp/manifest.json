@@ -1,11 +1,38 @@
 {
-	"_version": "1.12.0",
+	"_version": "2.0.0",
+  "short_name": "RightFinder",
+  "name": "Right Finder",
+  "icons": [
+    {
+      "src": "img/favicon.png",
+      "type": "image/png",
+      "sizes": "144x144",
+      "density": 3
+    },
+    {
+      "src": "img/favicon192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "density": 3
+    },
+    {
+      "src": "img/favicon512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "density": 3
+    }
+  ],
+  "start_url": "../index.html",
+  "background_color": "#f6f6f7",
+  "theme_color": "#f6f6f7",
+  "display": "standalone",
+  "orientation": "portrait",
 	"sap.app": {
 		"id": "aws.LightningStorage",
 		"type": "application",
 		"i18n": "i18n/i18n.properties",
 		"applicationVersion": {
-			"version": "1.0.0"
+			"version": "2.0.0"
 		},
 		"title": "{{appTitle}}",
 		"description": "{{appDescription}}",

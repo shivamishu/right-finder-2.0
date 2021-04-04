@@ -1,22 +1,51 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Right Finder</title>
-		<link rel="shortcut icon" href="img/favicon.png" />
-		<script id="sap-ui-bootstrap"
-			src="https://sapui5.hana.ondemand.com/1.75.7/resources/sap-ui-core.js"
-			data-sap-ui-theme="sap_fiori_3"
-			data-sap-ui-resourceroots='{"aws.LightningStorage": "./"}'
-			data-sap-ui-compatVersion="edge"
-			data-sap-ui-xx-bindingSyntax="complex"
-			data-sap-ui-oninit="module:sap/ui/core/ComponentSupport"
-			data-sap-ui-async="true"
-			data-sap-ui-frameOptions="trusted">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="Description"
+		content="This application is for SJSU Cloud Services Project: Right Finder 2.0 : A Serverless HR Management Application." />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Add to home screen for Safari on iOS -->
+	<!-- Hide Tabs and adress bar -->
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<!-- hide status bar -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="apple-mobile-web-app-title" content="Right Finder" />
+	<link rel="apple-touch-icon" href="img/favicon.png" />
+	<!-- Window rleated -->
+	<meta name="msapplication-TileImage" content="img/favicon.png" />
+	<meta name="msapplication-TileColor" content="#386CC1" />
+	<!-- Statusbar Color for Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#427CAC" />
+	<link rel="manifest" href="manifest.json" />
+	<title>Right Finder</title>
+	<link rel="shortcut icon" href="img/favicon.png" />
+	<script async>
+		if ("serviceWorker" in navigator) {
+			window.addEventListener("load", () => {
+				navigator.serviceWorker.register("sw.js").then(() => {
+					console.log("service worker successfully registered");
+				});
+			});
+		}
+	</script>
+	<script id="sap-ui-bootstrap" src="https://sapui5.hana.ondemand.com/1.75.7/resources/sap-ui-core.js"
+		data-sap-ui-theme="sap_fiori_3" data-sap-ui-resourceroots='{"aws.LightningStorage": "./"}'
+		data-sap-ui-compatVersion="edge" data-sap-ui-xx-bindingSyntax="complex"
+		data-sap-ui-oninit="module:sap/ui/core/ComponentSupport" data-sap-ui-async="true"
+		data-sap-ui-frameOptions="trusted">
 		</script>
-	</head>
-	<body class="sapUiBody">
-		<div data-sap-ui-component data-name="aws.LightningStorage" data-id="container" data-settings='{"id" : "LightningStorage"}'></div>
-	</body>
+</head>
+
+<body class="sapUiBody">
+	<div id="splash-screen">
+		<div class="splash-screen-text">Loading</div>
+		<div class="splash-screen-circle-outer"></div>
+		<div class="splash-screen-circle-inner"></div>
+	</div>
+	<div data-sap-ui-component data-name="aws.LightningStorage" data-id="container"
+		data-settings='{"id" : "LightningStorage"}'></div>
+</body>
+
 </html>
