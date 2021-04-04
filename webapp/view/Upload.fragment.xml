@@ -1,0 +1,24 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:core="sap.ui.core" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Dialog id="tableItemDialog" stretch="{= ${device>/system/phone}}" title="{i18n>uploadPhoto}" type="Standard" escapeHandler="handleAfterClose"
+		 draggable="true"
+		resizable="true" afterClose="handleAfterClose">
+		<content>
+			<VBox>
+                <MessageStrip
+				text="{mainModel>/photoMsg}"
+				type="{= ${mainModel>/photoError} ? 'Error' : 'Success'}"
+				showIcon="true"
+				showCloseButton="false"
+				class="sapUiMediumMargin"
+                visible="{= ${mainModel>/photoSuccess} || ${mainModel>/photoError}}">
+			    </MessageStrip>
+				<u:FileUploader id="fileUploader" placeholder="Choose a photo" class="sapUiSmallMargin" name="fileToUpload" uploadUrl="upload/" tooltip="Upload your photo"
+					uploadComplete="handleUploadComplete" mimeType="{mainModel>/mimeType}"/>
+				<Button text="{i18n>upload}" press="handleUploadPress" type="Emphasized" class="sapUiSmallMargin"/>
+			</VBox>
+		</content>
+        <buttons>
+			<Button id="closephoto" text="{i18n>close}" tooltip="{i18n>close}" press="handleAfterClose"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>
