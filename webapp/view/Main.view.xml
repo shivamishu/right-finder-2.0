@@ -47,27 +47,28 @@
 							<m:ObjectAttribute id="workPhoneAttr" text="{mainModel>/employee/contact}" active="true" tooltip="Work Phone" press="onPhone"/>
 						</m:HBox>
 					</layout:VerticalLayout>
-					<layout:VerticalLayout width="15%">
-						<m:Text text="" />
-						<core:InvisibleText id="defaultButtonDescription" text="Description of default button goes here."/>
-					</layout:VerticalLayout>
-					<layout:VerticalLayout  width="15%">
-						<m:Text text="" />
-						<core:InvisibleText id="defaultButtonDescription2" text="Description of default button goes here."/>
-					</layout:VerticalLayout>
-					<layout:VerticalLayout width="15%">
-						<m:Text text="" />
-						<core:InvisibleText id="defaultButtonDescription3" text="Description of default button goes here."/>
-					</layout:VerticalLayout>
-					<layout:VerticalLayout width="15%" >
+					<!-- <layout:VerticalLayout width="15%" visible="{device>/system/desktop}"> -->
+						<!-- <m:Text text="" /> -->
+						<!-- <core:InvisibleText id="defaultButtonDescription" text="Description of default button goes here."/> -->
+					<!-- </layout:VerticalLayout> -->
+					<!-- <layout:VerticalLayout  width="15%" visible="{device>/system/desktop}"> -->
+						<!-- <m:Text text="" /> -->
+						<!-- <core:InvisibleText id="defaultButtonDescription2" text="Description of default button goes here."/> -->
+					<!-- </layout:VerticalLayout> -->
+					<!-- <layout:VerticalLayout width="15%" visible="{device>/system/desktop}"> -->
+						<!-- <m:Text text="" /> -->
+						<!-- <core:InvisibleText id=/"defaultButtonDescription3" text="Description of default button goes here."/> -->
+					<!-- </layout:VerticalLayout> -->
+					<layout:VerticalLayout width="65%" visible="{device>/system/desktop}">
 						<m:HBox justifyContent="End" alignItems="End" alignContent="End">
 							<m:Button icon="sap-icon://upload" text="Upload Photo" type="Default" press="handleEditPhoto" tooltip="Change Profile Photo" class="sapUiTinyMarginEnd"/>
 							<m:Button icon="img/linkedin.jpg" busy="{mainModel>/linkedInBusy}" text="Import Photo from LinkedIn" type="Default" press="handleLinkedInImport" tooltip="Import Profile Picture from LinkedIn"/>
 						</m:HBox>
 					</layout:VerticalLayout>
-					<!-- <layout:VerticalLayout> -->
-						<!-- <m:Text text="" /> -->
-					<!-- </layout:VerticalLayout> -->
+					<layout:VerticalLayout visible="{= ${device>/system/desktop} ? false : true}">
+						<m:Button icon="sap-icon://upload" text="Upload Photo" type="Default" press="handleEditPhoto" tooltip="Change Profile Photo" class="sapUiTinyMarginEnd"/>
+						<m:Button icon="img/linkedin.jpg" busy="{mainModel>/linkedInBusy}" text="Import Photo from LinkedIn" type="Default" press="handleLinkedInImport" tooltip="Import Profile Picture from LinkedIn"/>
+					</layout:VerticalLayout>
 					<!-- <layout:VerticalLayout> -->
 						<!-- <m:Text text="" /> -->
 					<!-- </layout:VerticalLayout> -->
@@ -78,12 +79,12 @@
 						<subSections>
 							<ObjectPageSubSection titleUppercase="false">
 								<blocks>
-									<layout:VerticalLayout>
+									<layout:VerticalLayout class="sapUiNoMargin sapUiNoPadding sapUiNoContentPadding">
 										<!--<m:MessageStrip showIcon="true" type="Information" showCloseButton="true" text="Select an Employee to start On-Behalf Scenario"-->
 										<!--	class="sapUiTinyMarginTopBottom"/>-->
-										<m:Table id="table3" growing="true" growingThreshold="5" items="{mainModel>/adminreports}" busyIndicatorDelay="0"
-											busy="{mainModel>/adminReportsBusy}" updateFinished="onColleaguesTableUpdateFinished" width="auto" fixedLayout="true"
-											noDataText="Use Free Text Search to display results" class="sapUiForceWidthAuto">
+										<m:Table id="table3" growing="true" growingThreshold="{= ${device>/system/desktop} ? 10 : 5}" items="{mainModel>/adminreports}" busyIndicatorDelay="0"
+											busy="{mainModel>/adminReportsBusy}" updateFinished="onColleaguesTableUpdateFinished" width="100%" fixedLayout="true"
+											noDataText="Use Free Text Search to display results" >
 											<m:headerToolbar>
 												<m:OverflowToolbar>
 													<m:Title text="{mainModel>/totalAdminReports}"/>
@@ -112,13 +113,13 @@
 													</m:header>
 												</m:Column>
 												<!--Employee Data-->
-												<m:Column minScreenWidth="Phone" demandPopin="false" width="15%">
+												<m:Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" width="{= ${device>/system/desktop} ? '15%' : 'auto'}" hAlign="Begin">
 													<m:header>
 														<m:Label  text="Employee Name"/>
 													</m:header>
 												</m:Column>
 												<!--Contact Data-->
-												<m:Column  minScreenWidth="Desktop" demandPopin="true" popinDisplay="WithoutHeader" width="20%" hAlign="Center">
+												<m:Column  minScreenWidth="Desktop" demandPopin="true" popinDisplay="WithoutHeader" width="20%" hAlign="Begin">
 													<m:header>
 														<m:Label text="Contact Data"/>
 													</m:header>
@@ -131,12 +132,12 @@
 												</m:Column>
 												
 												<!--Office Address-->
-												<m:Column minScreenWidth="Desktop" demandPopin="false" hAlign="Begin" width="auto">
+												<m:Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Begin" width="auto">
 													<m:header>
 														<m:Label text="Office Location"/>
 													</m:header>
 												</m:Column>
-												<m:Column minScreenWidth="Desktop" demandPopin="false" hAlign="Begin" width="25%">
+												<m:Column minScreenWidth="Desktop" demandPopin="true" hAlign="Begin" width="{= ${device>/system/desktop} ? '25%' : 'auto'}">
 													<m:header>
 														<m:Label text="Skills"/>
 													</m:header>
@@ -146,11 +147,11 @@
 											<m:ColumnListItem type="Navigation" press="onPress">
 												<m:cells>
 													<!--Employee Image-->
-													<m:Image width="3rem" height="3rem" src="{path: 'mainModel>photo_url', formatter: '.formatURL'}"/>
+													<m:Image width="3rem" height="3rem" src="{path: 'mainModel>photo_url', formatter: '.formatURL'}" class="sapUiSmallMarginTopBottom"/>
 													<!--Employee Data-->
 													<m:ObjectIdentifier title="{mainModel>name}" tooltip="{mainModel>name}" class="sapMTableContentMargin" visible="true"/>
 													<!--Contact Data-->
-													<m:VBox class="sapMTableContentMargin" displayInline="true" wrap="Wrap" renderType="Bare" alignItems="Center">
+													<m:VBox class="sapMTableContentMargin" displayInline="true" wrap="Wrap" renderType="Bare" alignItems="Start">
 														<m:items>
 															<m:ObjectAttribute text="{mainModel>contact}" active="true" tooltip="Mobile Number" class="sapUiTinyMarginTop" press="onPhone"/>
 															<m:ObjectAttribute text="{mainModel>emp_id}" active="true" tooltip="E-Mail" class="sapUiTinyMarginTop" press="onEmail"/>
@@ -179,7 +180,7 @@
 									<layout:VerticalLayout>
 										<!--<m:MessageStrip showIcon="true" type="Information" showCloseButton="true" text="Select an Employee to start On-Behalf Scenario"-->
 										<!--	class="sapUiTinyMarginTopBottom"/>-->
-										<m:Table id="table2" growing="true" growingThreshold="5" items="{mainModel>/directreports}" busyIndicatorDelay="0"
+										<m:Table id="table2" growing="true" growingThreshold="{= ${device>/system/desktop} ? 10 : 5}" items="{mainModel>/directreports}" busyIndicatorDelay="0"
 											busy="{mainModel>/directReportsBusy}" updateFinished="onDirectTableUpdateFinished" width="auto" fixedLayout="true"
 											noDataText="Use Free Text Search to display results" class="sapUiForceWidthAuto">
 											<m:headerToolbar>
@@ -210,13 +211,13 @@
 													</m:header>
 												</m:Column>
 												<!--Employee Data-->
-												<m:Column id="employeeNameColumn2" minScreenWidth="Phone" demandPopin="false" width="12%">
+												<m:Column id="employeeNameColumn2" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Begin" width="{= ${device>/system/desktop} ? '12%' : 'auto'}">
 													<m:header>
 														<m:Label id="employeeNameLabel2" text="Employee Name"/>
 													</m:header>
 												</m:Column>
 												<!--Contact Data-->
-												<m:Column id="contactDataColumn2" minScreenWidth="Desktop" demandPopin="true" popinDisplay="WithoutHeader" width="18%" hAlign="Center">
+												<m:Column id="contactDataColumn2" minScreenWidth="Desktop" demandPopin="true" popinDisplay="WithoutHeader" width="18%" hAlign="Begin">
 													<m:header>
 														<m:Label id="contactDataLabel2" text="Contact Data"/>
 													</m:header>
@@ -227,23 +228,23 @@
 														<m:Label id="officeBuildingRoomLabel2" text="Postion"/>
 													</m:header>
 												</m:Column>
-												<m:Column id="officeDeptColumn2" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Center" width="14%">
+												<m:Column id="officeDeptColumn2" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Begin" width="14%">
 													<m:header>
 														<m:Label id="officeDeptLabel2" text="Department"/>
 													</m:header>
 												</m:Column>
 												<!--Office Address-->
-												<m:Column id="officeAddressColumn2" minScreenWidth="Desktop" demandPopin="false" hAlign="Begin" width="10%">
+												<m:Column id="officeAddressColumn2" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Begin" width="10%">
 													<m:header>
 														<m:Label id="officeAddressLabel2" text="Office Location"/>
 													</m:header>
 												</m:Column>
-												<m:Column id="skillsColumn2" minScreenWidth="Desktop" demandPopin="false" hAlign="Begin" width="20%">
+												<m:Column id="skillsColumn2" minScreenWidth="Desktop" demandPopin="true" hAlign="Begin" width="20%">
 													<m:header>
 														<m:Label id="skillsLabel2" text="Skills"/>
 													</m:header>
 												</m:Column>
-												<m:Column id="AvlColumn2" minScreenWidth="Desktop" demandPopin="false" hAlign="Center">
+												<m:Column id="AvlColumn2" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Center">
 													<m:header>
 														<m:Label id="AvlLabel2" text="Availability"/>
 													</m:header>
@@ -252,11 +253,11 @@
 											<m:ColumnListItem type="Navigation" press="onPress">
 												<m:cells>
 													<!--Employee Image-->
-													<m:Image width="3rem" height="3rem" src="{path: 'mainModel>photo_url', formatter: '.formatURL'}"/>
+													<m:Image width="3rem" height="3rem" src="{path: 'mainModel>photo_url', formatter: '.formatURL'}" class="sapUiSmallMarginTopBottom"/>
 													<!--Employee Data-->
 													<m:ObjectIdentifier title="{mainModel>name}" tooltip="{mainModel>name}" class="sapMTableContentMargin" visible="true"/>
 													<!--Contact Data-->
-													<m:VBox class="sapMTableContentMargin" displayInline="true" wrap="Wrap" renderType="Bare" alignItems="Center">
+													<m:VBox class="sapMTableContentMargin" displayInline="true" wrap="Wrap" renderType="Bare" alignItems="Start">
 														<m:items>
 															<m:ObjectAttribute text="{mainModel>contact}" active="true" tooltip="Mobile Number" class="sapUiTinyMarginTop" press="onPhone"/>
 															<m:ObjectAttribute text="{mainModel>emp_id}" active="true" tooltip="E-Mail" class="sapUiTinyMarginTop" press="onEmail"/>
@@ -265,16 +266,16 @@
 													<!--Office Location-->
 													<m:Text text="{mainModel>position}" tooltip="Position/Designation" class="sapMTableContentMargin"/>
 													<!--Office Address-->
-													<m:VBox class="sapMTableContentMargin" displayInline="true" wrap="Wrap" renderType="Bare" alignItems="Center">
+													<m:VBox class="sapMTableContentMargin" displayInline="true" wrap="Wrap" renderType="Bare" alignItems="Start">
 														<m:Text text="{mainModel>dept_name}" tooltip="Department Name" class="sapMTableContentMargin sapUiTinyMarginTop"/>
-														<m:Text text="Manager Email:" tooltip="Department Name" visible="{= !!${mainModel>mgr_id}}" class="sapMTableContentMargin sapUiTinyMarginTop"/>
+														<m:Text text="Manager Email:" tooltip="Manager Email" visible="{= !!${mainModel>mgr_id}}" class="sapMTableContentMargin sapUiTinyMarginTop"/>
 														<m:ObjectAttribute text="{mainModel>mgr_id}" visible="{= !!${mainModel>mgr_id}}" active="true" tooltip="E-Mail"
 															class="sapUiTinyMarginTop" press="onEmail"/>
 													</m:VBox>
 													<m:Text text="{mainModel>location}" tooltip="Office Location" class="sapMTableContentMargin"/>
 													<m:Text text="{mainModel>skils}" tooltip="Employee Skills" class="sapMTableContentMargin"/>
 													<m:VBox class="sapMTableContentMargin" displayInline="true" wrap="Wrap" renderType="Bare" alignItems="Center">
-														<m:ObjectStatus class="sapUiSmallMarginTopBottom" text="{mainModel>available}"
+														<m:ObjectStatus class="sapUiSmallMarginBottom" text="{mainModel>available}"
 															icon="{= ${mainModel>available} === 'Yes' ? 'sap-icon://message-success' : 'sap-icon://message-error'}"
 															state="{= ${mainModel>available} === 'Yes' ? 'Success' : 'Error'}"/>
 														<m:Label text="Available Since:" visible="{= !!${mainModel>available_since}}" tooltip="Is Employee Available" class="sapMTableContentMargin"/>
@@ -294,12 +295,12 @@
 							<ObjectPageSubSection id="colleaguesSubSection" titleUppercase="false">
 								<blocks>
 									<layout:VerticalLayout>
-										<m:Table id="table" growing="true" growingThreshold="5" items="{mainModel>/employees}" busyIndicatorDelay="0"
+										<m:Table id="table" growing="true" growingThreshold="{= ${device>/system/desktop} ? 10 : 5}" items="{mainModel>/employees}" busyIndicatorDelay="0"
 											busy="{mainModel>/employeesBusy}" updateFinished="onColleaguesTableUpdateFinished" width="auto" fixedLayout="true"
 											noDataText="Use Free Text Search to display results" class="sapUiForceWidthAuto">
 											<m:headerToolbar>
 												<m:OverflowToolbar>
-													<m:Title id="colleaguesTitle" text="{mainModel>/totalEmployees}"/>
+													<m:Title id="colleaguesTitle" text="{mainModel>/totalEmployees}" visible="{device>/system/desktop}"/>
 													<m:ToolbarSpacer id="colleaguesSpacer"/>
 													<m:Text id="availability" text="Is Available?:"/>
 													<m:Select id="switch">
@@ -324,13 +325,13 @@
 													</m:header>
 												</m:Column>
 												<!--Employee Data-->
-												<m:Column id="employeeNameColumn" minScreenWidth="Phone" demandPopin="false" width="12%">
+												<m:Column id="employeeNameColumn" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Begin" width="{= ${device>/system/desktop} ? '12%' : 'auto'}">
 													<m:header>
 														<m:Label id="employeeNameLabel" text="Employee Name"/>
 													</m:header>
 												</m:Column>
 												<!--Contact Data-->
-												<m:Column id="contactDataColumn" minScreenWidth="Desktop" demandPopin="true" popinDisplay="WithoutHeader" width="18%" hAlign="Center">
+												<m:Column id="contactDataColumn" minScreenWidth="Desktop" demandPopin="true" popinDisplay="WithoutHeader" width="18%" hAlign="Begin">
 													<m:header>
 														<m:Label id="contactDataLabel" text="Contact Data"/>
 													</m:header>
@@ -341,23 +342,23 @@
 														<m:Label id="officeBuildingRoomLabel" text="Postion"/>
 													</m:header>
 												</m:Column>
-												<m:Column id="officeDeptColumn" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Center" width="14%">
+												<m:Column id="officeDeptColumn" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Begin" width="14%">
 													<m:header>
 														<m:Label id="officeDeptLabel" text="Department"/>
 													</m:header>
 												</m:Column>
 												<!--Office Address-->
-												<m:Column id="officeAddressColumn" minScreenWidth="Desktop" demandPopin="false" hAlign="Begin" width="10%">
+												<m:Column id="officeAddressColumn" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Begin" width="10%">
 													<m:header>
 														<m:Label id="officeAddressLabel" text="Office Location"/>
 													</m:header>
 												</m:Column>
-												<m:Column id="skillsColumn" minScreenWidth="Desktop" demandPopin="false" hAlign="Begin" width="20%">
+												<m:Column id="skillsColumn" minScreenWidth="Desktop" demandPopin="true" hAlign="Begin" width="20%">
 													<m:header>
 														<m:Label id="skillsLabel" text="Skills"/>
 													</m:header>
 												</m:Column>
-												<m:Column id="AvlColumn" minScreenWidth="Desktop" demandPopin="false" hAlign="Center">
+												<m:Column id="AvlColumn" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Center">
 													<m:header>
 														<m:Label id="AvlLabel" text="Availability"/>
 													</m:header>
@@ -366,11 +367,11 @@
 											<m:ColumnListItem type="Navigation" press="onPress">
 												<m:cells>
 													<!--Employee Image-->
-													<m:Image width="3rem" height="3rem" src="{path: 'mainModel>photo_url', formatter: '.formatURL'}"/>
+													<m:Image width="3rem" height="3rem" src="{path: 'mainModel>photo_url', formatter: '.formatURL'}" class="sapUiSmallMarginTopBottom"/>
 													<!--Employee Data-->
 													<m:ObjectIdentifier title="{mainModel>name}" tooltip="{mainModel>name}" class="sapMTableContentMargin" visible="true"/>
 													<!--Contact Data-->
-													<m:VBox class="sapMTableContentMargin" displayInline="true" wrap="Wrap" renderType="Bare" alignItems="Center">
+													<m:VBox class="sapMTableContentMargin" displayInline="true" wrap="Wrap" renderType="Bare" alignItems="Start">
 														<m:items>
 															<m:ObjectAttribute title="Ph" text="{mainModel>contact}" active="true" tooltip="Mobile Number" class="sapUiTinyMarginTop" press="onPhone"/>
 															<m:ObjectAttribute title="Email" text="{mainModel>emp_id}" active="true" tooltip="E-Mail" class="sapUiTinyMarginTop" press="onEmail"/>
@@ -379,7 +380,7 @@
 													<!--Office Location-->
 													<m:Text text="{mainModel>position}" tooltip="Position/Designation" class="sapMTableContentMargin"/>
 													<!--Office Address-->
-													<m:VBox class="sapMTableContentMargin" displayInline="true" wrap="Wrap" renderType="Bare" alignItems="Center">
+													<m:VBox class="sapMTableContentMargin" displayInline="true" wrap="Wrap" renderType="Bare" alignItems="Start">
 														<m:Text text="{mainModel>dept_name}" tooltip="Department Name" class="sapMTableContentMargin sapUiTinyMarginTop"/>
 														<m:Text text="Manager Email:" tooltip="Department Name" visible="{= !!${mainModel>mgr_id}}" class="sapMTableContentMargin sapUiTinyMarginTop"/>
 														<m:ObjectAttribute text="{mainModel>mgr_id}" visible="{= !!${mainModel>mgr_id}}" active="true" tooltip="E-Mail"
@@ -388,7 +389,7 @@
 													<m:Text text="{mainModel>location}" tooltip="Office Location" class="sapMTableContentMargin"/>
 													<m:Text text="{mainModel>skils}" tooltip="Employee Skills" class="sapMTableContentMargin"/>
 													<m:VBox class="sapMTableContentMargin" displayInline="true" wrap="Wrap" renderType="Bare" alignItems="Center">
-														<m:ObjectStatus class="sapUiSmallMarginTopBottom" text="{mainModel>available}"
+														<m:ObjectStatus class="sapUiSmallMarginBottom" text="{mainModel>available}"
 															icon="{= ${mainModel>available} === 'Yes' ? 'sap-icon://message-success' : 'sap-icon://message-error'}"
 															state="{= ${mainModel>available} === 'Yes' ? 'Success' : 'Error'}"/>
 														<m:Label text="Available Since:" visible="{= !!${mainModel>available_since}}" tooltip="Is Employee Available" class="sapMTableContentMargin"/>
@@ -418,10 +419,10 @@
 						<subSections>
 							<ObjectPageSubSection id="profileSubSection" titleUppercase="false">
 								<blocks>
-									<layout:VerticalLayout>
+									<layout:VerticalLayout width="100%">
 										<!--<m:MessageStrip showIcon="true" type="Information" showCloseButton="true" text="Select an Employee to start On-Behalf Scenario"-->
 										<!--	class="sapUiTinyMarginTopBottom"/>-->
-										<f:SimpleForm editable="true" layout="ColumnLayout" title="Details">
+										<f:SimpleForm editable="true" layout="ColumnLayout" title="Details" width="100%">
 											<f:toolbar>
 												<m:OverflowToolbar >
 													<m:Title text="Details"/>
