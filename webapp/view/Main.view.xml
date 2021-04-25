@@ -259,6 +259,8 @@
 													<!--Office Address-->
 													
 													<m:Text text="{mainModel>location}" tooltip="Office Location" class="sapMTableContentMargin"/>
+													<m:Text text="{mainModel>skils}" tooltip="Employee Skills" class="sapMTableContentMargin"/>
+													<m:ObjectAttribute text="{mainModel>requested_by}" active="true" tooltip="E-Mail" class="sapUiTinyMarginTop" press="onEmail"/>
 													<m:HBox class="sapMTableContentMargin" displayInline="true" wrap="Wrap" renderType="Bare" alignItems="Start">
 														<m:items>
 															<m:Button text="Accept" type="Accept" tooltip="Accept Request" class="sapUiTinyMarginTop sapUiTinyMarginEnd" press="onAcceptRequest"/>
