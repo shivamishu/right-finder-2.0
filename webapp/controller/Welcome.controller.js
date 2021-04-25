@@ -31,7 +31,7 @@ sap.ui.define(
       },
       handleCognito: function () {
         var sUrl =
-          "https://rightfinder.auth.ap-south-1.amazoncognito.com/login?client_id=4khht0k2e1r2k5v3ei7hsp8smd&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https://master.dumii96ks5gdv.amplifyapp.com/";
+          "https://rightfinder.auth.ap-south-1.amazoncognito.com/logout?client_id=4khht0k2e1r2k5v3ei7hsp8smd&logout_uri=https://master.dumii96ks5gdv.amplifyapp.com/";
         sap.m.URLHelper.redirect(sUrl, false);
       },
     });

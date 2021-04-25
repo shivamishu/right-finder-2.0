@@ -48,6 +48,14 @@ sap.ui.define(
         } else {
           oModel.setProperty("/ADMIN", false);
         }
+        var isRequestBtnVisible = false,
+          isRequestButtonEnabled = true;
+        if (oModel.getProperty("/currUserMgr")) {
+          isRequestButtonEnabled = oModel.getProperty("/currentEmp") === oModel.getProperty("/employee/requested_by") ? false : true;
+          isRequestBtnVisible = oModel.getProperty("/currentEmp") === oModel.getProperty("/employee/requested_by") || !oModel.getProperty("/employee/requested_by") ? true : false;
+        }
+        oModel.setProperty("/showRequestButton", isRequestBtnVisible);
+        oModel.setProperty("/enableRequestButton", isRequestButtonEnabled);
       },
       _getManagers: function () {
         var oModel = this._oView.getModel("newEmployee");
@@ -57,7 +65,7 @@ sap.ui.define(
             Authorization: `Bearer ${window.sessionStorage.accessToken}`,
           },
           contentType: "application/json",
-          url: "https://vu84dpyf0g.execute-api.us-west-1.amazonaws.com/v1?mode=mgr",
+          url: "https://2ingf1wro0.execute-api.us-west-1.amazonaws.com/v1?mode=mgr",
           crossDomain: true,
           dataType: "json",
           success: function (data) {
@@ -212,7 +220,7 @@ sap.ui.define(
             Authorization: `Bearer ${window.sessionStorage.accessToken}`,
           },
           contentType: "application/json",
-          url: "https://ced4k2xuh5.execute-api.us-west-1.amazonaws.com/v1",
+          url: "https://4ckgy4jh8c.execute-api.us-west-1.amazonaws.com/v1",
           crossDomain: true,
           dataType: "json",
           data: JSON.stringify(data),
@@ -255,7 +263,7 @@ sap.ui.define(
             Authorization: `Bearer ${window.sessionStorage.accessToken}`,
           },
           contentType: "application/json",
-          url: "https://vu84dpyf0g.execute-api.us-west-1.amazonaws.com/v1",
+          url: "https://2ingf1wro0.execute-api.us-west-1.amazonaws.com/v1",
           crossDomain: true,
           dataType: "json",
           data: JSON.stringify(data),
@@ -285,7 +293,7 @@ sap.ui.define(
         });
       },
       formatURL: function (sUrl) {
-        return sUrl ? sUrl : "https://d9ejjjzd6egbz.cloudfront.net/user.png";
+        return sUrl ? sUrl : "https://d3fu3214bbcc0g.cloudfront.net/user.png";
       },
       onNavPress: function (oEvent) {
         window.history.go(-1);
@@ -298,6 +306,45 @@ sap.ui.define(
         // window.location.replace("");
         sap.m.URLHelper.redirect(sLogOutUrl, false);
       },
+      handleRequestAllocation: function () {
+        var oModel = this.getView().getModel("newEmployee");
+        var sEmpId = oModel.getProperty("/employee/emp_id");
+        var data = { "employee_id": sEmpId };
+        oModel.setProperty("/employeeBusy", true);
+        $.ajax({
+          type: "POST",
+          headers: {
+            Authorization: `Bearer ${window.sessionStorage.accessToken}`,
+          },
+          contentType: "application/json",
+          url: "https://ymetjn3mfa.execute-api.us-west-1.amazonaws.com/empRequest",
+          dataType: "json",
+          data: JSON.stringify(data),
+          success: function (data) {
+            oModel.setProperty("/employeeBusy", false);
+            oModel.setProperty("/showRequestButton", true);
+            oModel.setProperty("/enableRequestButton", false);
+            this.onNavPress();
+            this._oEventBus.publish(_sIdentity, "itemsRefresh", {
+              // Show toast after the navigation to the overview page
+              fnAfterNavigate: function () {
+                jQuery.sap.delayedCall(400, this, function () {
+                  MessageToast.show("Employee allocation request sent Successfully");
+                });
+              },
+            });
+          }.bind(this),
+          error: function (error) {
+            oModel.setProperty("/employeeBusy", false);
+            if (error.status === 401) {
+              window.sessionStorage.accessToken = "";
+              MessageToast.show("Error occured. Sign in again");
+              sap.m.URLHelper.redirect(sUrl, false);
+            }
+            sap.m.URLHelper.redirect(sUrl, false);
+          }.bind(this),
+        });
+      }
     });
   }
 );

@@ -10,9 +10,8 @@ sap.ui.define(
     "use strict";
     var _sIdentity = "cmpe272.ss";
     var sLogOutUrl =
-      "https://rightfinder.auth.ap-south-1.amazoncognito.com/logout?client_id=4khht0k2e1r2k5v3ei7hsp8smd&logout_uri=https://master.dumii96ks5gdv.amplifyapp.com/";
-    var sUrl =
-      "https://rightfinder.auth.ap-south-1.amazoncognito.com/login?client_id=4khht0k2e1r2k5v3ei7hsp8smd&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https://master.dumii96ks5gdv.amplifyapp.com/";
+      "https://rightfinder.auth.ap-south-1.amazoncognito.com/logout?client_id=tv98hvjqg6q2bubao0gqte446&logout_uri=https://master.dumii96ks5gdv.amplifyapp.com/";
+    var sUrl = "https://rightfinder.auth.us-west-1.amazoncognito.com/login?client_id=tv98hvjqg6q2bubao0gqte446&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https://master.dumii96ks5gdv.amplifyapp.com/";
     return Controller.extend("aws.LightningStorage.controller.Main", {
       onInit: function () {
         this._oView = this.getView();
@@ -49,7 +48,7 @@ sap.ui.define(
               Authorization: `Bearer ${window.sessionStorage.accessToken}`,
             },
             contentType: "application/json",
-            url: "https://w5desi2z0i.execute-api.us-west-1.amazonaws.com/emp",
+            url: "https://j7jnk6by86.execute-api.us-west-1.amazonaws.com/emp",
             crossDomain: true,
             dataType: "json",
             success: function (data) {
@@ -76,6 +75,7 @@ sap.ui.define(
                 .getModel("mainModel")
                 .setProperty("/ADMIN", data.result.is_admin ? true : false);
               this._getAdminReports();
+              this._getAdminRequests();
               this._oView
                 .getModel("newEmployee")
                 .setProperty("/ADMIN", data.result.is_admin ? true : false);
@@ -113,6 +113,45 @@ sap.ui.define(
           sap.m.URLHelper.redirect(sUrl, false);
         }
       },
+      _getAdminRequests: function () {
+        var isAdmin = this._oView.getModel("mainModel").getProperty("/ADMIN");
+        if (!isAdmin) {
+          return;
+        }
+        this._oView
+          .getModel("mainModel")
+          .setProperty("/adminRequestBusy", true);
+        $.ajax({
+          type: "GET",
+          headers: {
+            Authorization: `Bearer ${window.sessionStorage.accessToken}`,
+          },
+          contentType: "application/json",
+          url: "https://2ingf1wro0.execute-api.us-west-1.amazonaws.com/v1?mode=admin_requests",
+          dataType: "json",
+          success: function (data) {
+            this._oView
+              .getModel("mainModel")
+              .setProperty("/adminrequests", data.result);
+            this._oView
+              .getModel("mainModel")
+              .setProperty("/adminRequestBusy", false);
+          }.bind(this),
+          error: function (error) {
+            this._oView
+              .getModel("mainModel")
+              .setProperty("/adminRequestBusy", false);
+            console.log("Error fetching direct reports");
+            // var sUrl =
+            //   "https://mylightningstorage.auth.ap-south-1.amazoncognito.com/login?client_id=4khht0k2e1r2k5v3ei7hsp8smd&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https://www.mylightningstorage.com/";
+            if (error.status === 401) {
+              MessageToast.show("Error occured. Sign in again");
+              window.sessionStorage.accessToken = "";
+              sap.m.URLHelper.redirect(sUrl, false);
+            }
+          }.bind(this),
+        });
+      },
       _getAdminReports: function () {
         var isAdmin = this._oView.getModel("mainModel").getProperty("/ADMIN");
         if (!isAdmin) {
@@ -127,7 +166,7 @@ sap.ui.define(
             Authorization: `Bearer ${window.sessionStorage.accessToken}`,
           },
           contentType: "application/json",
-          url: "https://vu84dpyf0g.execute-api.us-west-1.amazonaws.com/v1?mode=admin",
+          url: "https://2ingf1wro0.execute-api.us-west-1.amazonaws.com/v1?mode=admin",
           crossDomain: true,
           dataType: "json",
           success: function (data) {
@@ -175,7 +214,7 @@ sap.ui.define(
             Authorization: `Bearer ${window.sessionStorage.accessToken}`,
           },
           contentType: "application/json",
-          url: "https://vu84dpyf0g.execute-api.us-west-1.amazonaws.com/v1?mode=direct",
+          url: "https://2ingf1wro0.execute-api.us-west-1.amazonaws.com/v1?mode=direct",
           crossDomain: true,
           dataType: "json",
           success: function (data) {
@@ -252,7 +291,7 @@ sap.ui.define(
         this._oPhotoDialog.close();
       },
       formatURL: function (sUrl) {
-        return sUrl ? sUrl : "https://d9ejjjzd6egbz.cloudfront.net/user.png";
+        return sUrl ? sUrl : "https://d3fu3214bbcc0g.cloudfront.net/user.png";
       },
       attachControl: function (oControl) {
         var sCompactCozyClass = this.getOwnerComponent().getContentDensityClass();
@@ -278,11 +317,11 @@ sap.ui.define(
             Authorization: `Bearer ${window.sessionStorage.accessToken}`
           },
           contentType: "application/json",
-          url: "https://w5desi2z0i.execute-api.us-west-1.amazonaws.com/emp",
+          url: "https://j7jnk6by86.execute-api.us-west-1.amazonaws.com/emp",
           crossDomain: true,
           dataType: "json",
           data: JSON.stringify(data),
-          success: function (data) {
+          success: function (result) {
             // oMainModel.setProperty("/employees", data.result);
             MessageToast.show("Profile Updated Successfully");
             oMainModel.setProperty("/employeeBusy", false);
@@ -297,6 +336,86 @@ sap.ui.define(
             // sap.m.URLHelper.redirect(sUrl, false);
           }.bind(this),
         });
+      },
+      onRejectRequest: function (oEvent) {
+        var oBindingContext = oEvent.getSource().getParent().getBindingContext("mainModel"),
+          oObject = oBindingContext.getObject(),
+          oMainModel = this.getView().getModel("mainModel"),
+          aRequests = oMainModel.getProperty("/adminrequests"),
+          data = { emp_id: oObject.emp_id, requested_by: '' };
+        oMainModel.setProperty("/adminRequestBusy", true);
+        $.ajax({
+          type: "POST",
+          headers: {
+            Authorization: `Bearer ${window.sessionStorage.accessToken}`,
+          },
+          contentType: "application/json",
+          url: "https://9hoankm1y3.execute-api.us-west-1.amazonaws.com/apr",
+          crossDomain: true,
+          dataType: "json",
+          data: JSON.stringify(data),
+          success: function (result) {
+            var aNewRequests = [];
+            aRequests.forEach(function (req) {
+              if (req.emp_id !== data.emp_id) {
+                aNewRequests.push(req);
+              }
+            });
+            oMainModel.setProperty("/adminrequests", aNewRequests);
+            MessageToast.show("Request rejected!");
+            oMainModel.setProperty("/adminRequestBusy", false);
+          }.bind(this),
+          error: function (error) {
+            oMainModel.setProperty("/adminRequestBusy", false);
+            if (error.status === 401) {
+              window.sessionStorage.accessToken = "";
+              MessageToast.show("Error occured. Sign in again");
+              sap.m.URLHelper.redirect(sUrl, false);
+            }
+            //sap.m.URLHelper.redirect(sUrl, false);
+          }.bind(this),
+        });
+      },
+      onAcceptRequest: function (oEvent) {
+        var oBindingContext = oEvent.getSource().getParent().getBindingContext("mainModel"),
+          oObject = oBindingContext.getObject(),
+          oMainModel = this.getView().getModel("mainModel"),
+          aRequests = oMainModel.getProperty("/adminrequests"),
+          data = { emp_id: oObject.emp_id, requested_by: oObject.requested_by };
+        oMainModel.setProperty("/adminRequestBusy", true);
+        $.ajax({
+          type: "POST",
+          headers: {
+            Authorization: `Bearer ${window.sessionStorage.accessToken}`,
+          },
+          contentType: "application/json",
+          url: "https://9hoankm1y3.execute-api.us-west-1.amazonaws.com/apr",
+          crossDomain: true,
+          dataType: "json",
+          data: JSON.stringify(data),
+          success: function (data) {
+            var aNewRequests = [];
+            aRequests.forEach(function (req) {
+              if (req.emp_id !== data.emp_id) {
+                aNewRequests.push(req);
+              }
+            });
+            oMainModel.setProperty("/adminrequests", aNewRequests);
+            MessageToast.show("Request Accepted. Employee assigned to the requestor.");
+            oMainModel.setProperty("/adminRequestBusy", false);
+          }.bind(this),
+          error: function (error) {
+            oMainModel.setProperty("/adminRequestBusy", false);
+            if (error.status === 401) {
+              window.sessionStorage.accessToken = "";
+              MessageToast.show("Error occured. Sign in again");
+              sap.m.URLHelper.redirect(sUrl, false);
+            }
+            //sap.m.URLHelper.redirect(sUrl, false);
+          }.bind(this),
+        });
+
+
       },
       onPress: function (oEvent) {
         var oLineItem = oEvent
@@ -352,7 +471,7 @@ sap.ui.define(
             Authorization: `Bearer ${window.sessionStorage.accessToken}`,
           },
           contentType: "application/json",
-          url: "https://ced4k2xuh5.execute-api.us-west-1.amazonaws.com/v1",
+          url: "https://4ckgy4jh8c.execute-api.us-west-1.amazonaws.com/v1",
           crossDomain: true,
           dataType: "json",
           data: JSON.stringify(data),
@@ -452,7 +571,7 @@ sap.ui.define(
           },
           contentType: "application/json",
           url:
-            "https://qaogf6orkh.execute-api.us-west-1.amazonaws.com/v1?query=" + sSearchText + "&available=" + sAvailable,
+            "https://uv0wj5r7hj.execute-api.us-west-1.amazonaws.com/v1?query=" + sSearchText + "&available=" + sAvailable,
           dataType: "json",
           crossDomain: true,
           success: function (data) {
@@ -499,6 +618,21 @@ sap.ui.define(
         this.getView()
           .getModel("mainModel")
           .setProperty("/totalEmployees", sTitle);
+      },
+      onRequestTableUpdateFinished: function (oEvent) {
+        var sTitle,
+          oList = oEvent.getSource(),
+          iTotalItems = oEvent.getParameter("total");
+        // only update the counter if the length is final and
+        // the list is not empty
+        if (iTotalItems && oList.getBinding("items").isLengthFinal()) {
+          sTitle = "Requests (" + iTotalItems + ")";
+        } else {
+          sTitle = "";
+        }
+        this.getView()
+          .getModel("mainModel")
+          .setProperty("/totalAdminRequests", sTitle);
       },
       onFileDeleted: function (oEvent) {
         var sDocId = oEvent.getParameter("documentId"),
@@ -617,7 +751,7 @@ sap.ui.define(
       handleLinkedInImport: function () {
         var oMainModel = this._oView.getModel("mainModel");
         var sUrl =
-          "https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=86pphz1g1cf3rm&redirect_uri=https://master.dumii96ks5gdv.amplifyapp.com&scope=r_liteprofile%20r_emailaddress%20w_member_social";
+          "https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=86grngv21de7bq&redirect_uri=https://master.d1l8csbyyor94c.amplifyapp.com/&scope=r_liteprofile%20r_emailaddress%20w_member_social";
         // window.open(sUrl, "window", "toolbar=no, menubar=no, resizable=yes");
         var child = window.open(
           sUrl,

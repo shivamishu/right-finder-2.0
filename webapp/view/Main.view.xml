@@ -172,6 +172,108 @@
 							</ObjectPageSubSection>
 						</subSections>
 					</ObjectPageSection>
+					<!--Admin Allocation Request Section-->
+					<ObjectPageSection id="adminRequestSection" showTitle="true" title="Allocation Request" titleUppercase="false" visible="{mainModel>/ADMIN}">
+						<subSections>
+							<ObjectPageSubSection titleUppercase="false">
+								<blocks>
+									<layout:VerticalLayout class="sapUiNoMargin sapUiNoPadding sapUiNoContentPadding">
+										<!--<m:MessageStrip showIcon="true" type="Information" showCloseButton="true" text="Select an Employee to start On-Behalf Scenario"-->
+										<!--	class="sapUiTinyMarginTopBottom"/>-->
+										<m:Table id="tableAdminReq" growing="true" growingThreshold="{= ${device>/system/desktop} ? 10 : 5}" items="{mainModel>/adminrequests}" busyIndicatorDelay="0"
+											busy="{mainModel>/adminRequestBusy}" updateFinished="onRequestTableUpdateFinished" width="100%" fixedLayout="true"
+											noDataText="No pending employee assignment requests available" >
+											<m:headerToolbar>
+												<m:OverflowToolbar>
+													<m:Title text="{mainModel>/totalAdminRequests}"/>
+													<m:ToolbarSpacer/>
+													<m:Button text="Refresh" icon="sap-icon://synchronize" press="_getAdminRequests"/>
+												</m:OverflowToolbar>
+											</m:headerToolbar>
+											<m:columns>
+												<!--Employee Image-->
+												<m:Column width="5rem">
+													<m:header>
+														<m:Label  text="Employee Photo" visible="false"/>
+													</m:header>
+												</m:Column>
+												<!--Employee Data-->
+												<m:Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" width="{= ${device>/system/desktop} ? '15%' : 'auto'}" hAlign="Begin">
+													<m:header>
+														<m:Label  text="Employee Name"/>
+													</m:header>
+												</m:Column>
+												<!--Contact Data-->
+												<m:Column  minScreenWidth="Desktop" demandPopin="true" popinDisplay="WithoutHeader" width="20%" hAlign="Begin">
+													<m:header>
+														<m:Label text="Contact Data"/>
+													</m:header>
+												</m:Column>
+												<!--Building Room Info-->
+												<m:Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Begin" width="auto">
+													<m:header>
+														<m:Label text="Postion"/>
+													</m:header>
+												</m:Column>
+												
+												<!--Office Address-->
+												<m:Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Begin" width="auto">
+													<m:header>
+														<m:Label text="Office Location"/>
+													</m:header>
+												</m:Column>
+												<!--Skills-->
+												<m:Column id="skillsColumn2Req" minScreenWidth="Desktop" demandPopin="true" hAlign="Begin" width="{= ${device>/system/desktop} ? '15%' : 'auto'}">
+													<m:header>
+														<m:Label id="skillsLabel2Req" text="Skills"/>
+													</m:header>
+												</m:Column>
+												<!--Requestor-->
+												<m:Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Begin" width="auto">
+													<m:header>
+														<m:Label text="Requested by"/>
+													</m:header>
+												</m:Column>
+												<m:Column minScreenWidth="Desktop" demandPopin="true" hAlign="End" width="{= ${device>/system/desktop} ? '25%' : 'auto'}">
+													<m:header>
+														<m:Label text="Accept/Reject"/>
+													</m:header>
+												</m:Column>
+												
+											</m:columns>
+											<m:ColumnListItem type="Navigation" press="onPress">
+												<m:cells>
+													<!--Employee Image-->
+													<m:Image width="3rem" height="3rem" src="{path: 'mainModel>photo_url', formatter: '.formatURL'}" class="sapUiSmallMarginTopBottom"/>
+													<!--Employee Data-->
+													<m:ObjectIdentifier title="{mainModel>name}" tooltip="{mainModel>name}" class="sapMTableContentMargin" visible="true"/>
+													<!--Contact Data-->
+													<m:VBox class="sapMTableContentMargin" displayInline="true" wrap="Wrap" renderType="Bare" alignItems="Start">
+														<m:items>
+															<m:ObjectAttribute text="{mainModel>contact}" active="true" tooltip="Mobile Number" class="sapUiTinyMarginTop" press="onPhone"/>
+															<m:ObjectAttribute text="{mainModel>emp_id}" active="true" tooltip="E-Mail" class="sapUiTinyMarginTop" press="onEmail"/>
+														</m:items>
+													</m:VBox>
+													<!--Office Location-->
+													<m:Text text="{mainModel>position}" tooltip="Position/Designation" class="sapMTableContentMargin"/>
+													<!--Office Address-->
+													
+													<m:Text text="{mainModel>location}" tooltip="Office Location" class="sapMTableContentMargin"/>
+													<m:HBox class="sapMTableContentMargin" displayInline="true" wrap="Wrap" renderType="Bare" alignItems="Start">
+														<m:items>
+															<m:Button text="Accept" type="Accept" tooltip="Accept Request" class="sapUiTinyMarginTop sapUiTinyMarginEnd" press="onAcceptRequest"/>
+															<m:Button text="Reject" type="Reject" tooltip="Reject Request" class="sapUiTinyMarginTop" press="onRejectRequest"/>
+														</m:items>
+													</m:HBox>
+													
+												</m:cells>
+											</m:ColumnListItem>
+										</m:Table>
+									</layout:VerticalLayout>
+								</blocks>
+							</ObjectPageSubSection>
+						</subSections>
+					</ObjectPageSection>
 					<!--Direct Reports Section-->
 					<ObjectPageSection id="directSection" showTitle="true" title="Direct Reportees" titleUppercase="false" visible="{mainModel>/MGR}">
 						<subSections>
