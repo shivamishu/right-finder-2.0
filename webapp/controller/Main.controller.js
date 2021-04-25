@@ -775,7 +775,7 @@ sap.ui.define(
                 Authorization: `Bearer ${window.sessionStorage.accessToken}`,
               },
               contentType: "application/json",
-              url: "/api/import_linkedin",
+              url: "https://3oupc4lzn0.execute-api.us-west-1.amazonaws.com/linkedin",
               crossDomain: true,
               dataType: "json",
               data: JSON.stringify(data),
