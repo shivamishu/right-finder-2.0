@@ -223,7 +223,7 @@
 													</m:header>
 												</m:Column>
 												<!--Skills-->
-												<m:Column id="skillsColumn2Req" minScreenWidth="Desktop" demandPopin="true" hAlign="Begin" width="{= ${device>/system/desktop} ? '15%' : 'auto'}">
+												<m:Column id="skillsColumn2Req" minScreenWidth="Desktop" demandPopin="true" hAlign="Begin" width="auto">
 													<m:header>
 														<m:Label id="skillsLabel2Req" text="Skills"/>
 													</m:header>
@@ -234,7 +234,8 @@
 														<m:Label text="Requested by"/>
 													</m:header>
 												</m:Column>
-												<m:Column minScreenWidth="Desktop" demandPopin="true" hAlign="End" width="{= ${device>/system/desktop} ? '25%' : 'auto'}">
+												<!-- {= ${device>/system/desktop} ? '25%' : 'auto'} -->
+												<m:Column minScreenWidth="Desktop" demandPopin="true" hAlign="End" width="auto">
 													<m:header>
 														<m:Label text="Accept/Reject"/>
 													</m:header>

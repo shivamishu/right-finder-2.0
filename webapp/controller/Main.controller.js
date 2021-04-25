@@ -393,7 +393,7 @@ sap.ui.define(
           crossDomain: true,
           dataType: "json",
           data: JSON.stringify(data),
-          success: function (data) {
+          success: function (result) {
             var aNewRequests = [];
             aRequests.forEach(function (req) {
               if (req.emp_id !== data.emp_id) {
