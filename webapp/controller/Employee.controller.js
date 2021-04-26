@@ -20,7 +20,7 @@ sap.ui.define(
     "use strict";
     var _sIdentity = "cmpe272.ss";
     var sLogOutUrl =
-      "https://rightfinder.auth.ap-south-1.amazoncognito.com/logout?client_id=tv98hvjqg6q2bubao0gqte446&logout_uri=https://master.d1l8csbyyor94c.amplifyapp.com/";
+      "https://rightfinder.auth.us-west-1.amazoncognito.com/logout?client_id=tv98hvjqg6q2bubao0gqte446&logout_uri=https://master.d1l8csbyyor94c.amplifyapp.com/";
     var sUrl =
     "https://rightfinder.auth.us-west-1.amazoncognito.com/login?client_id=tv98hvjqg6q2bubao0gqte446&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https://master.d1l8csbyyor94c.amplifyapp.com/";
     return Controller.extend("aws.LightningStorage.controller.Employee", {
