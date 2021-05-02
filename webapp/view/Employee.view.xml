@@ -85,6 +85,7 @@
 					                                        <m:FlexItemData growFactor="1" />
 				                                        </m:layoutData>
 			                                        </m:Switch>
+													<m:Button text="{= ${newEmployee>/enableRequestButton} ? 'Request Allocation' : 'Requested'}" type="Emphasized" enabled="{newEmployee>/enableRequestButton}" visible="{newEmployee>/showRequestButton}" press="handleRequestAllocation"/>
 													<m:Button text="Update" type="Emphasized" visible="{= ${newEmployee>/MGR} || ${newEmployee>/ADMIN}}" press="handleUpdatePress"/>
 												</m:OverflowToolbar>
 											</f:toolbar>
