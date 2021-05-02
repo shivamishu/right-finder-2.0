@@ -79,6 +79,9 @@ sap.ui.define(
               this._oView
                 .getModel("newEmployee")
                 .setProperty("/ADMIN", data.result.is_admin ? true : false);
+              this._oView
+                .getModel("newEmployee")
+                .setProperty("/currUserMgr", data.result.is_mgr ? true : false);
               this._oView.getModel("mainModel").setProperty("/busy", false);
               var skills = data.result.skils ? data.result.skils : "",
                 aSkills = skills.split(", "),
