@@ -494,71 +494,190 @@ sap.ui.define(
           }.bind(this),
         });
       },
+      sendBase64String: async function (oFile, fileSize, mimeType, fileName, oFileUploader) {
+        const toBase64 = file => new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = error => reject(error);
+        });
+
+        var sBase64String = await toBase64(oFile);
+        var data = {
+          filename: fileName,
+          base64String: sBase64String,
+          mimeType: mimeType,
+          fileSize: fileSize
+        }
+        var oMainModel = this.getView().getModel("mainModel");
+        $.ajax({
+          type: "POST",
+          headers: {
+            Authorization: `Bearer ${window.sessionStorage.accessToken}`,
+          },
+          contentType: "application/json",
+          url: "https://zlvydelo5b.execute-api.us-west-1.amazonaws.com/uploadPhoto",
+          dataType: "json",
+          data: JSON.stringify(data),
+          success: function (data) {
+            response = data.result;
+            oMainModel.setProperty("/employee/photo_url", response.url);
+            oFileUploader.setValue(null);
+            oMainModel.setProperty(
+              "/photoMsg",
+              "Photo Uploaded Successfully"
+            );
+            oMainModel.setProperty("/photoSuccess", true);
+            oMainModel.setProperty("/photoError", false);
+            oMainModel.setProperty("/busyUpload", false);
+          }.bind(this),
+          error: function (error) {
+            oMainModel.setProperty(
+              "/photoMsg",
+              "An error occurred. Please retry."
+            );
+            oMainModel.setProperty("/photoError", true);
+            oMainModel.setProperty("/photoSuccess", false);
+            oMainModel.setProperty("/busyUpload", false);
+            console.log("Error fetching files");
+          }.bind(this),
+        });
+      },
       handleUploadPress: function (oEvent) {
         var oFileUploader = this._oView.byId("fileUploader"),
           oFile = oFileUploader.oFileUpload.files[0],
           oMainModel = this.getView().getModel("mainModel");
+
+        const fileSize = oFile.size; //updated size
+        const mimeType = oFile.mimetype;
+        const fileName = oFile.name;
         if (oFile) {
+          sendBase64String(oFile, fileSize, mimeType, fileName, oFileUploader);
+
           // var oUploadSet = this._oView.byId("UploadCollection"),
           // aUploadCollectionItems = oUploadSet.getItems(),
           oFileUploader.setBusy(true);
-          var sMode = "POST",
-            sUrl = "/api/upload_photo",
-            sFileName = "",
-            currIndx = -1,
-            prevUTime = "";
-          oMainModel.setProperty("/busyUpload", true);
-          var formData = new FormData(),
-            currTime = Date.now().toString();
+          // var sMode = "POST",
+          //   sUrl = "/api/upload_photo",
+          //   sFileName = "",
+          //   currIndx = -1,
+          //   prevUTime = "";
+          // oMainModel.setProperty("/busyUpload", true);
+          // var formData = new FormData(),
+          //   currTime = Date.now().toString();
 
-          formData.append("utime", currTime);
+          // formData.append("utime", currTime);
 
-          // formData.append("fname", "Shivam");
-          // formData.append("lname", "Shrivastav");
-          // formData.append("utime", Date.now().toString());
-          formData.append("fileToUpload", oFile, oFile.name);
-          // formData.append("user_id", "s.s@gmail.com");
-          formData.append("ctime", currTime);
-          var params = {
-            url: sUrl,
-            timeout: 0,
-            headers: {
-              Authorization: `Bearer ${window.sessionStorage.accessToken}`,
-            },
-            processData: false,
-            method: sMode,
-            mimeType: "multipart/form-data",
-            contentType: false,
-            data: formData,
-            crossDomain: true
-          };
+          // // formData.append("fname", "Shivam");
+          // // formData.append("lname", "Shrivastav");
+          // // formData.append("utime", Date.now().toString());
+          // formData.append("fileToUpload", oFile, oFile.name);
+          // // formData.append("user_id", "s.s@gmail.com");
+          // formData.append("ctime", currTime);
+          // var params = {
+          //   url: sUrl,
+          //   timeout: 0,
+          //   headers: {
+          //     Authorization: `Bearer ${window.sessionStorage.accessToken}`,
+          //   },
+          //   processData: false,
+          //   method: sMode,
+          //   mimeType: "multipart/form-data",
+          //   contentType: false,
+          //   data: formData,
+          // };
 
-          $.ajax(params).done(function (response, success) {
-            oFileUploader.setBusy(false);
-            if (success === "success") {
-              response = JSON.parse(response);
-              oMainModel.setProperty("/employee/photo_url", response.url);
-              oFileUploader.setValue(null);
-              oMainModel.setProperty(
-                "/photoMsg",
-                "Photo Uploaded Successfully"
-              );
-              oMainModel.setProperty("/photoSuccess", true);
-              oMainModel.setProperty("/photoError", false);
-            } else {
-              oMainModel.setProperty(
-                "/photoMsg",
-                "An error occurred. Please retry."
-              );
-              oMainModel.setProperty("/photoError", true);
-              oMainModel.setProperty("/photoSuccess", false);
-            }
-            oMainModel.setProperty("/busyUpload", false);
-          });
+          // $.ajax(params).done(function (response, success) {
+          //   oFileUploader.setBusy(false);
+          //   if (success === "success") {
+          //     response = JSON.parse(response);
+          //     oMainModel.setProperty("/employee/photo_url", response.url);
+          //     oFileUploader.setValue(null);
+          //     oMainModel.setProperty(
+          //       "/photoMsg",
+          //       "Photo Uploaded Successfully"
+          //     );
+          //     oMainModel.setProperty("/photoSuccess", true);
+          //     oMainModel.setProperty("/photoError", false);
+          //   } else {
+          //     oMainModel.setProperty(
+          //       "/photoMsg",
+          //       "An error occurred. Please retry."
+          //     );
+          //     oMainModel.setProperty("/photoError", true);
+          //     oMainModel.setProperty("/photoSuccess", false);
+          //   }
+          //   oMainModel.setProperty("/busyUpload", false);
+          // });
         } else {
           MessageToast.show("Please choose a file to uploaded");
         }
       },
+      // handleUploadPress: function (oEvent) {
+      //   var oFileUploader = this._oView.byId("fileUploader"),
+      //     oFile = oFileUploader.oFileUpload.files[0],
+      //     oMainModel = this.getView().getModel("mainModel");
+      //   if (oFile) {
+      //     // var oUploadSet = this._oView.byId("UploadCollection"),
+      //     // aUploadCollectionItems = oUploadSet.getItems(),
+      //     oFileUploader.setBusy(true);
+      //     var sMode = "POST",
+      //       sUrl = "/api/upload_photo",
+      //       sFileName = "",
+      //       currIndx = -1,
+      //       prevUTime = "";
+      //     oMainModel.setProperty("/busyUpload", true);
+      //     var formData = new FormData(),
+      //       currTime = Date.now().toString();
+
+      //     formData.append("utime", currTime);
+
+      //     // formData.append("fname", "Shivam");
+      //     // formData.append("lname", "Shrivastav");
+      //     // formData.append("utime", Date.now().toString());
+      //     formData.append("fileToUpload", oFile, oFile.name);
+      //     // formData.append("user_id", "s.s@gmail.com");
+      //     formData.append("ctime", currTime);
+      //     var params = {
+      //       url: sUrl,
+      //       timeout: 0,
+      //       headers: {
+      //         Authorization: `Bearer ${window.sessionStorage.accessToken}`,
+      //       },
+      //       processData: false,
+      //       method: sMode,
+      //       mimeType: "multipart/form-data",
+      //       contentType: false,
+      //       data: formData,
+      //       crossDomain: true
+      //     };
+
+      //     $.ajax(params).done(function (response, success) {
+      //       oFileUploader.setBusy(false);
+      //       if (success === "success") {
+      //         response = JSON.parse(response);
+      //         oMainModel.setProperty("/employee/photo_url", response.url);
+      //         oFileUploader.setValue(null);
+      //         oMainModel.setProperty(
+      //           "/photoMsg",
+      //           "Photo Uploaded Successfully"
+      //         );
+      //         oMainModel.setProperty("/photoSuccess", true);
+      //         oMainModel.setProperty("/photoError", false);
+      //       } else {
+      //         oMainModel.setProperty(
+      //           "/photoMsg",
+      //           "An error occurred. Please retry."
+      //         );
+      //         oMainModel.setProperty("/photoError", true);
+      //         oMainModel.setProperty("/photoSuccess", false);
+      //       }
+      //       oMainModel.setProperty("/busyUpload", false);
+      //     });
+      //   } else {
+      //     MessageToast.show("Please choose a file to uploaded");
+      //   }
+      // },
       onEmployeeSearch: function (oEvent) {
         var sSearchText = oEvent.getParameter("query");
         sSearchText = sSearchText ? sSearchText : oEvent.getSource().getValue();

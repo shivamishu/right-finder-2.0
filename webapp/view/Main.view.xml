@@ -513,7 +513,7 @@
 							<ObjectPageSubSection titleUppercase="false">
 								<blocks>
 									<layout:VerticalLayout>
-            							<html:iframe src="https://d9ejjjzd6egbz.cloudfront.net/hranalytics.html" frameborder="0" style="overflow:hidden;height:100vh;width:100vw" height="100vh" width="100vw"/>
+            							<html:iframe src="https://d3fu3214bbcc0g.cloudfront.net/hranalytics.html" frameborder="0" style="overflow:hidden;height:100vh;width:100vw" height="100vh" width="100vw"/>
             						</layout:VerticalLayout>	
 								</blocks>
 							</ObjectPageSubSection>
