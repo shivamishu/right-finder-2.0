@@ -26,7 +26,7 @@ RightFinder has the capability of social media integration with LinkedIn to Impo
 RightFinder will enable in identifying the employees who are idle(available) with the right skillset
 
 RightFinder application has been migrated from EC2 compute to AWSLambda server less.  
-Verson1 : https://github.com/sjsu-cmpe272/RightFinder. 
+Verson1 : https://github.com/sjsu-cmpe272/RightFinder.  
 Verson2 :   
 
 **Application Workflow** : 
