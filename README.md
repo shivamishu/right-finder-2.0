@@ -32,7 +32,8 @@ RightFinder will enable in identifying the employees who are idle(available) wit
                    View and update his/her own profile with confidential details.
                    Import profile picture from LinkedIn Profile.
                    Search for employees who are not yet assigned to any manager.
-                  Assign employees to a particular manager.
+                   Assign employees to a particular manager.
+                   Approve or Reject the request from manager for a team member to be onboarded based on the project demand.
             
            Manager View:
                     View and update his/her own profile with confidential details.
@@ -40,6 +41,7 @@ RightFinder will enable in identifying the employees who are idle(available) wit
                     View and Update his/her direct reportees basic and confidential details.
                     Mark his reportees as available for new assignments.
                     Search within the company for the skill sets which are readily available for new role.
+                    Request admin to approve an available employee to be onboarded to the team.
           Employee View:
                     View and update his/her own profile.
                     Import profile picture from LinkedIn Profile.
@@ -49,7 +51,10 @@ RightFinder will enable in identifying the employees who are idle(available) wit
 
 
 
-● Auto-Scaling Group: Configure the required auto scaling policy to make the system highly-available and highly scalable with min desired instance as 1 and max instance of 2. These configs could be changed anytime as per the requirements.
+● Amplify: It is categorized as Application Release Orchestration to support frontend code deployment with Git-based workflow.
+
+
+● AWS Lamda: AWS Lambda automatically runs your code without requiring you to provision or manage infrastructure.It also automatically scales application by running code in response to each event.
 
 
 ● S3: S3 (with Standard S3 storage class) is used to store employee images
@@ -65,9 +70,6 @@ RightFinder will enable in identifying the employees who are idle(available) wit
 
 
 ● RDS: All the user database is stored here and connected to Tableau for analytics. Currently using RDS on MySQL engine.
-
-
-● Route 53: Registered our domain on Route53 and configured the hosted zones and created records and added record names with various routing policies using dual stack load balancer redirecting all traffic to HTTPS(installed SSL certificates using Certificate Manager (ACM)).
 
 
 ● CloudWatch: It is used to log and monitor the auto scaling, EC2,S3 bucket logs etc SNS is used for sending various above notifications using messages, emails and logs.
@@ -89,9 +91,6 @@ RightFinder will enable in identifying the employees who are idle(available) wit
 
 
 ● Visual Studio Code
-
-
-● Jenkins
 
 
 ● various nodejs packages can be downloaded using command npm i --s
