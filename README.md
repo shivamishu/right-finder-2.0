@@ -25,8 +25,8 @@ RightFinder will provide employees to view their basic official and confidential
 RightFinder has the capability of social media integration with LinkedIn to Import profile pictures.
 RightFinder will enable in identifying the employees who are idle(available) with the right skillset
 
-RightFinder application has been migrated from EC2 compute to AWSLambda server less.
-Verson1 : https://github.com/sjsu-cmpe272/RightFinder
+RightFinder application has been migrated from EC2 compute to AWSLambda server less. 
+Verson1 : https://github.com/sjsu-cmpe272/RightFinder 
 Verson2 : 
 
 **Application Workflow** : 
