@@ -25,9 +25,9 @@ RightFinder will provide employees to view their basic official and confidential
 RightFinder has the capability of social media integration with LinkedIn to Import profile pictures.
 RightFinder will enable in identifying the employees who are idle(available) with the right skillset
 
-RightFinder application has been migrated from EC2 compute to AWSLambda server less. 
-Verson1 : https://github.com/sjsu-cmpe272/RightFinder 
-Verson2 : 
+RightFinder application has been migrated from EC2 compute to AWSLambda server less.  
+Verson1 : https://github.com/sjsu-cmpe272/RightFinder. 
+Verson2 :   
 
 **Application Workflow** : 
 
@@ -55,7 +55,7 @@ Verson2 :
 
 
 
-● Amplify: It is categorized as Application Release Orchestration to support frontend code deployment with Git-based workflow.
+● Amplify: AWS Amplify is categorized as Application Release Orchestration and is used in our prject to support frontend code deployment with Git-based workflow.
 
 
 ● AWS Lamda: AWS Lambda automatically runs your code without requiring you to provision or manage infrastructure.It also automatically scales application by running code in response to each event.
