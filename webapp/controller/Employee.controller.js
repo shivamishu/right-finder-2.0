@@ -22,7 +22,7 @@ sap.ui.define(
     var sLogOutUrl =
       "https://rightfinder.auth.us-west-1.amazoncognito.com/logout?client_id=tv98hvjqg6q2bubao0gqte446&logout_uri=https://master.d1l8csbyyor94c.amplifyapp.com/";
     var sUrl =
-    "https://rightfinder.auth.us-west-1.amazoncognito.com/login?client_id=tv98hvjqg6q2bubao0gqte446&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https://master.d1l8csbyyor94c.amplifyapp.com/";
+      "https://rightfinder.auth.us-west-1.amazoncognito.com/login?client_id=tv98hvjqg6q2bubao0gqte446&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https://master.d1l8csbyyor94c.amplifyapp.com/";
     return Controller.extend("aws.LightningStorage.controller.Employee", {
       onInit: function () {
         this._oView = this.getView();
@@ -50,7 +50,7 @@ sap.ui.define(
         }
         var isRequestBtnVisible = false,
           isRequestButtonEnabled = true;
-        if (oModel.getProperty("/currUserMgr")) {
+        if (oModel.getProperty("/currUserMgr") && (oModel.getProperty("/employee/mgr_id") === null || oModel.getProperty("/employee/mgr_id") === "")) {
           isRequestButtonEnabled = oModel.getProperty("/currentEmp") === oModel.getProperty("/employee/requested_by") ? false : true;
           isRequestBtnVisible = oModel.getProperty("/currentEmp") === oModel.getProperty("/employee/requested_by") || !oModel.getProperty("/employee/requested_by") ? true : false;
         }

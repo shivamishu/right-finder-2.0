@@ -494,15 +494,12 @@ sap.ui.define(
           }.bind(this),
         });
       },
-      sendBase64String: async function (oFile, fileSize, mimeType, fileName, oFileUploader) {
-        const toBase64 = file => new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onload = () => resolve(reader.result);
-          reader.onerror = error => reject(error);
-        });
+      handleReject: function () {
+        MessageToast.show("File could not be read");
+      },
+      sendBase64String: function (fileSize, mimeType, fileName, oFileUploader) {
 
-        var sBase64String = await toBase64(oFile);
+        // var sBase64String = await toBase64(oFile);
         var data = {
           filename: fileName,
           base64String: sBase64String,
@@ -545,14 +542,20 @@ sap.ui.define(
       },
       handleUploadPress: function (oEvent) {
         var oFileUploader = this._oView.byId("fileUploader"),
-          oFile = oFileUploader.oFileUpload.files[0],
-          oMainModel = this.getView().getModel("mainModel");
+          oFile = oFileUploader.oFileUpload.files[0];
 
         const fileSize = oFile.size; //updated size
-        const mimeType = oFile.mimetype;
+        const mimeType = oFile.type;
         const fileName = oFile.name;
         if (oFile) {
-          sendBase64String(oFile, fileSize, mimeType, fileName, oFileUploader);
+          const toBase64 = new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(oFile);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+          });
+          toBase64.then(sendBase64String(oFile, fileSize, mimeType, fileName, oFileUploader), handleReject());
+          // sendBase64String(oFile, fileSize, mimeType, fileName, oFileUploader);
 
           // var oUploadSet = this._oView.byId("UploadCollection"),
           // aUploadCollectionItems = oUploadSet.getItems(),
