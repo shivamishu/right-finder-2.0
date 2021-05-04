@@ -554,7 +554,7 @@ sap.ui.define(
             reader.onload = () => resolve(reader.result);
             reader.onerror = error => reject(error);
           });
-          toBase64.then(sendBase64String(oFile, fileSize, mimeType, fileName, oFileUploader), handleReject());
+          toBase64.then(this.sendBase64String(oFile, fileSize, mimeType, fileName, oFileUploader), this.handleReject());
           // sendBase64String(oFile, fileSize, mimeType, fileName, oFileUploader);
 
           // var oUploadSet = this._oView.byId("UploadCollection"),
