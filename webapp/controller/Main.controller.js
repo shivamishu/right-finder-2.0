@@ -507,6 +507,7 @@ sap.ui.define(
           fileSize: fileSize
         }
         var oMainModel = this.getView().getModel("mainModel");
+        oFileUploader.setBusy(true);
         $.ajax({
           type: "POST",
           headers: {
@@ -517,6 +518,7 @@ sap.ui.define(
           dataType: "json",
           data: JSON.stringify(data),
           success: function (data) {
+            oFileUploader.setBusy(false);
             response = data.result;
             oMainModel.setProperty("/employee/photo_url", response.url);
             oFileUploader.setValue(null);
@@ -529,6 +531,7 @@ sap.ui.define(
             oMainModel.setProperty("/busyUpload", false);
           }.bind(this),
           error: function (error) {
+            oFileUploader.setBusy(false);
             oMainModel.setProperty(
               "/photoMsg",
               "An error occurred. Please retry."
@@ -555,14 +558,14 @@ sap.ui.define(
             reader.onerror = error => reject(error);
           });
           toBase64.then(value => {
-            this.sendBase64String(fileSize, value, mimeType, fileName, oFileUploader);
+            this.sendBase64String(value, fileSize, mimeType, fileName, oFileUploader);
           });
           // toBase64.then(this.sendBase64String(oFile, fileSize, mimeType, fileName, oFileUploader), this.handleReject());
           // sendBase64String(oFile, fileSize, mimeType, fileName, oFileUploader);
 
           // var oUploadSet = this._oView.byId("UploadCollection"),
           // aUploadCollectionItems = oUploadSet.getItems(),
-          oFileUploader.setBusy(true);
+          
           // var sMode = "POST",
           //   sUrl = "/api/upload_photo",
           //   sFileName = "",
