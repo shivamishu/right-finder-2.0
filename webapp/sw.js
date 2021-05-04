@@ -1,4 +1,4 @@
-const CACHE_NAME = "right-finder-ui5-v2.0.5";
+const CACHE_NAME = "right-finder-ui5-v2.0.6";
 let RESOURCES_TO_PRELOAD = [
 	"index.html",
 	"Component.js",
