@@ -497,7 +497,7 @@ sap.ui.define(
       handleReject: function () {
         MessageToast.show("File could not be read");
       },
-      sendBase64String: function (fileSize, mimeType, fileName, oFileUploader) {
+      sendBase64String: function (sBase64String, fileSize, mimeType, fileName, oFileUploader) {
 
         // var sBase64String = await toBase64(oFile);
         var data = {
@@ -554,7 +554,10 @@ sap.ui.define(
             reader.onload = () => resolve(reader.result);
             reader.onerror = error => reject(error);
           });
-          toBase64.then(this.sendBase64String(oFile, fileSize, mimeType, fileName, oFileUploader), this.handleReject());
+          toBase64.then(value => {
+            this.sendBase64String(fileSize, value, mimeType, fileName, oFileUploader);
+          });
+          // toBase64.then(this.sendBase64String(oFile, fileSize, mimeType, fileName, oFileUploader), this.handleReject());
           // sendBase64String(oFile, fileSize, mimeType, fileName, oFileUploader);
 
           // var oUploadSet = this._oView.byId("UploadCollection"),
