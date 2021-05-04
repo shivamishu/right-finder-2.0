@@ -519,8 +519,7 @@ sap.ui.define(
           data: JSON.stringify(data),
           success: function (data) {
             oFileUploader.setBusy(false);
-            response = data;
-            oMainModel.setProperty("/employee/photo_url", response.url);
+            oMainModel.setProperty("/employee/photo_url", data.url);
             oFileUploader.setValue(null);
             oMainModel.setProperty(
               "/photoMsg",
