@@ -81,3 +81,28 @@ is routed to automatically internally by Amazon S3 over an optimized network pat
 ● Used OpenUI5 with bootstrap to build UI. It is an open source Model View Controller based JavaScript Framework. For Backend, we used NodeJS.  
 ![image](https://user-images.githubusercontent.com/70448345/118405454-a1734300-b695-11eb-9e8c-e44d0df99277.png)
 
+
+
+**List of Softwares used**:  
+● Visual Studio Code   
+● AWS CLI   
+● Various NodeJS npm packages can be downloaded using command npm i --s  
+● MySQL Workbench  
+● Git  
+● Tableau  
+
+**Tech Stack**:  
+REST API - Profile details, Search Employee, Social media: **NodeJS / AWS Lambda /AWS API Gateway**  
+SSO / Authorizations: **AWS Cognito** 
+UI: **OpenUI5**  
+Content management - Store profile picture: **AWS S3 / CloudFront**  
+Report Generation: **Tableau**  
+CI/CD: **AWS Amplify** 
+Data Persistence: **AWS RDS**  
+
+**Setup and run project**:  
+There is no setup required to run the application. You can directly use the below app or you can fork the Git repo and add it to AWS Amplify to host the new app.  
+App URL: https://master.d1l8csbyyor94c.amplifyapp.com/
+![image](https://user-images.githubusercontent.com/70448345/118405476-ba7bf400-b695-11eb-8965-fa6fbebee6d5.png)
+
+
