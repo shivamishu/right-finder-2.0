@@ -7,9 +7,6 @@
 **Demo PPT**:
 https://drive.google.com/file/d/1ZTAYQDejhSN8L98tCaqwqc9B2sjkySE5/view?usp=sharing
 
-![image](https://user-images.githubusercontent.com/70448345/118405402-683ad300-b695-11eb-8712-98de9c8a6d27.png)
-
-![image](https://user-images.githubusercontent.com/24988178/118391798-03c33980-b5eb-11eb-9221-b0c894bfb337.png)
 
 
 ## Application Use cases:
@@ -46,7 +43,6 @@ RightFinder will enable in identifying the employees who are idle(available) wit
 
 
 
-  ![Screen Shot 2021-05-16 at 7 29 54 AM](https://user-images.githubusercontent.com/68475402/118404510-1740c580-b628-11eb-8545-2cb804d78f4b.png)
 
                     
                     
@@ -79,7 +75,6 @@ is routed to automatically internally by Amazon S3 over an optimized network pat
 ● AWS Amplify: Frontend of the app is deployed on AWS Amplify, which provides automatic CI/CD pipeline.  
 ● Tableau: Integrating with Tableau to track skill sets and check employee availability for a particular skill set.  
 ● Used OpenUI5 with bootstrap to build UI. It is an open source Model View Controller based JavaScript Framework. For Backend, we used NodeJS.  
-![image](https://user-images.githubusercontent.com/70448345/118405454-a1734300-b695-11eb-9e8c-e44d0df99277.png)
 
 
 
@@ -103,6 +98,6 @@ Data Persistence: **AWS RDS**
 **Setup and run project**:  
 There is no setup required to run the application. You can directly use the below app or you can fork the Git repo and add it to AWS Amplify to host the new app.  
 App URL: https://master.d1l8csbyyor94c.amplifyapp.com/
-![image](https://user-images.githubusercontent.com/70448345/118405476-ba7bf400-b695-11eb-8965-fa6fbebee6d5.png)
+
 
 
