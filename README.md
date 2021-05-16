@@ -39,7 +39,6 @@ RightFinder will enable in identifying the employees who are idle(available) wit
          
          
   **It’s a serverless Application deployed on AWS Amplify with below Architecture**:   
-![image](https://user-images.githubusercontent.com/70448345/118405428-80aaed80-b695-11eb-8b01-103286e74a32.png)
 
 ![image](https://user-images.githubusercontent.com/24988178/118391798-03c33980-b5eb-11eb-9221-b0c894bfb337.png)
 
