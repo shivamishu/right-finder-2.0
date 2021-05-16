@@ -43,3 +43,41 @@ RightFinder will enable in identifying the employees who are idle(available) wit
          
   **It’s a serverless Application deployed on AWS Amplify with below Architecture**:   
 ![image](https://user-images.githubusercontent.com/70448345/118405428-80aaed80-b695-11eb-8b01-103286e74a32.png)
+
+
+
+  ![Screen Shot 2021-05-16 at 7 29 54 AM](https://user-images.githubusercontent.com/68475402/118404510-1740c580-b628-11eb-8545-2cb804d78f4b.png)
+
+                    
+                    
+# AWS and Other Resources: 
+
+● AWS Lambda: Application is serverless using lambda functions and all the UI calls are going through API gateway to Lambda functions.  
+API Gateway Lambda Function APIs:  
+https://2ingf1wro0.execute-api.us-west-1.amazonaws.com/v1  
+https://4ckgy4jh8c.execute-api.us-west-1.amazonaws.com/v1  
+https://ymetjn3mfa.execute-api.us-west-1.amazonaws.com/empRequest  
+https://j7jnk6by86.execute-api.us-west-1.amazonaws.com/emp  
+https://2ingf1wro0.execute-api.us-west1.amazonaws.com/v1  
+https://j7jnk6by86.execute-api.us-west-1.amazonaws.com/emp  
+https://9hoankm1y3.execute-api.us-west-1.amazonaws.com/apr  
+https://9hoankm1y3.execute-api.us-west-1.amazonaws.com/apr  
+https://uv0wj5r7hj.execute-api.us-west-1.amazonaws.com/v1  
+
+● S3: S3 (with Standard S3 storage class) is used to store employee images.  
+
+● CloudFront: We used Amazon CloudFront to reduce the unnecessary traffic back to S3
+origin to help improve latency as well as reduce load on the origin. It caches our content
+and provides faster access globally.   
+● Transfer Acceleration for S3 Bucket: Transfer Acceleration will take advantage of its
+globally distributed edge locations. When the data arrives at the nearest edge location, it
+is routed to automatically internally by Amazon S3 over an optimized network path.  
+● RDS: All the user database is stored here and connected to Tableau for analytics.  Currently using RDS on MySQL engine.    
+● CloudWatch: It is used to log and monitor Lambda Functions.  SNS is used for sending various above notifications using messages, emails and logs.    
+● Amazon Cognito: We have created a user pool for all our admin users to accommodate the access to application and APIs using Cognito Hosted UI for sign and sign up using 2FA and also added social identity providers like Facebook.  
+● Third Party Integration: We used LinkedIn for third party integration, where an employee could import his profile picture from his/her LinkedIn Profile.  
+● AWS Amplify: Frontend of the app is deployed on AWS Amplify, which provides automatic CI/CD pipeline.  
+● Tableau: Integrating with Tableau to track skill sets and check employee availability for a particular skill set.  
+● Used OpenUI5 with bootstrap to build UI. It is an open source Model View Controller based JavaScript Framework. For Backend, we used NodeJS.  
+![image](https://user-images.githubusercontent.com/70448345/118405454-a1734300-b695-11eb-9e8c-e44d0df99277.png)
+
